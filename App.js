@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { StyleSheet, Text, View } from "react-native";
+import LoginPage from "./components/LoginPage";
 
 export default function App() {
   const [message, setMessage] = useState("yo");
@@ -14,7 +15,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>{message}</Text>
+      <LoginPage />
     </View>
   );
 }
