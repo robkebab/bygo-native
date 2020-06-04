@@ -1,22 +1,33 @@
 import React, {useEffect, useState} from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {Button, StyleSheet, Text, View } from "react-native";
 import LoginPage from "./components/LoginPage";
 
+const URL = "http://localhost:3000"
+
 export default function App() {
-  const [message, setMessage] = useState("yo");
-  const [loggedIn, setLoggedIn] = useState(null)
+  const [loggedIn, setLoggedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
 
   useEffect(getUsers, []);
   
   function getUsers() {
-    fetch("http://localhost:3000/")
+    fetch(URL + "/sessions")
     .then(r => r.json())
-    .then(j => setMessage(j.message))
+    .then(j => !j.error && setUser(j) )
   };
 
+  function setUser(u) {
+    setLoggedIn(true);
+    setCurrentUser(u);
+  }
+
+  function delUser() {
+    setLoggedIn(false);
+    setCurrentUser(null);
+  }
+
   function logIn(email, password) {
-    fetch("http://localhost:3000/login", {
+    fetch(URL + "/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,12 +42,24 @@ export default function App() {
       })
     })
     .then(r => r.json())
-    .then(j => {setLoggedIn(true); setCurrentUser(j.message)});
+    .then(j => setUser(j));
+  }
+
+  function logOut() {
+    fetch(URL + "/logout", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      }
+    })
+    .then(r => r.json())
+    .then(j => j.message && delUser())
   }
 
   return (
     <View style={styles.container}>
-      {loggedIn ? <Text>{message}</Text> : <LoginPage handleSubmit={logIn}/>}
+      {loggedIn ? <Button title="log out" onPress={logOut}>Log Out</Button> : <LoginPage handleSubmit={logIn}/>}
     </View>
   );
 }
