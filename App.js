@@ -1,24 +1,25 @@
-import React, {useEffect, useState} from "react";
-import {Button, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
 import LoginPage from "./components/LoginPage";
+import MyListsPage from "./components/MyListsPage";
 
-const URL = "http://localhost:3000"
+const URL = "http://localhost:3000";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [currentUser, setCurrentUser] = useState(null)
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  useEffect(getUsers, []);
-  
-  function getUsers() {
-    fetch(URL + "/sessions")
-    .then(r => r.json())
-    .then(j => !j.error && setUser(j) )
-  };
+  // useEffect(isUser, []);
+
+  // function isUser() {
+  //   fetch(URL + "/sessions")
+  //   .then(r => r.json())
+  //   .then(j => setUser(j) )
+  // };
 
   function setUser(u) {
-    setLoggedIn(true);
     setCurrentUser(u);
+    setLoggedIn(true);
   }
 
   function delUser() {
@@ -34,15 +35,15 @@ export default function App() {
         Accept: "application/json",
       },
       body: JSON.stringify({
-          user: {
-              email,
-              password,
-              password_confirmation: password
-          }
-      })
+        user: {
+          email,
+          password,
+          password_confirmation: password,
+        },
+      }),
     })
-    .then(r => r.json())
-    .then(j => setUser(j));
+      .then((r) => r.json())
+      .then((j) => setUser(j));
   }
 
   function logOut() {
@@ -51,15 +52,20 @@ export default function App() {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-      }
+      },
     })
-    .then(r => r.json())
-    .then(j => j.message && delUser())
+      .then((r) => r.json())
+      .then((j) => j.message && delUser());
   }
 
   return (
     <View style={styles.container}>
-      {loggedIn ? <Button title="log out" onPress={logOut}>Log Out</Button> : <LoginPage handleSubmit={logIn}/>}
+      {console.log(currentUser)}
+      {loggedIn ? (
+        <MyListsPage handlePress={logOut} userID={currentUser.id}/>
+      ) : (
+        <LoginPage handleSubmit={logIn} />
+      )}
     </View>
   );
 }

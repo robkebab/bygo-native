@@ -22,14 +22,10 @@ const LoginPage = ({handleSubmit}) => {
       />
       <Text>{email}</Text>
       <Text>{password}</Text>
-      <Button onPress={() => handleSubmit(email, password)} title="log in">
-        Log In
-      </Button>
+      <Button onPress={() => handleSubmit(email, password)} title="Log In" />
     </View>
   );
 };
-
-export default LoginPage;
 
 const styles = StyleSheet.create({
   container: {
@@ -46,3 +42,6 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 });
+
+export default LoginPage;
+
