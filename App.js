@@ -4,18 +4,39 @@ import LoginPage from "./components/LoginPage";
 
 export default function App() {
   const [message, setMessage] = useState("yo");
+  const [loggedIn, setLoggedIn] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null)
 
   useEffect(getUsers, []);
   
   function getUsers() {
-    fetch("https://still-basin-20566.herokuapp.com/")
+    fetch("http://localhost:3000/")
     .then(r => r.json())
     .then(j => setMessage(j.message))
   };
 
+  function logIn(email, password) {
+    fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+          user: {
+              email,
+              password,
+              password_confirmation: password
+          }
+      })
+    })
+    .then(r => r.json())
+    .then(j => {setLoggedIn(true); setCurrentUser(j.message)});
+  }
+
   return (
     <View style={styles.container}>
-      <LoginPage />
+      {loggedIn ? <Text>{message}</Text> : <LoginPage handleSubmit={logIn}/>}
     </View>
   );
 }
