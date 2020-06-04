@@ -6,11 +6,17 @@ const MyLists = ({ lists }) => {
     return <Text style={styles.li}>{item.name}</Text>;
   }
 
-  return <FlatList data={lists} renderItem={renderItem} />;
+  return (
+    <FlatList style={styles.container} data={lists} renderItem={renderItem} />
+  );
 };
 
 const styles = StyleSheet.create({
+  container: {
+
+  },
   li: {
+    flex: 1,
     textAlign: "center",
     fontSize: 20,
     width: 300,

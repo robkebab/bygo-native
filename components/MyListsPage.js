@@ -29,9 +29,9 @@ const MyListsPage = ({handlePress, userID}) => {
   // }
     return (
         <View style={styles.container}>
-            <Text>Hello World</Text>
+            <Text>My Lists</Text>
             <Button title="Add List" />
-            <MyLists lists={lists} ></MyLists>
+            <MyLists style={styles.listContainer} lists={lists} ></MyLists>
             <Button title="Log Out" onPress={handlePress} />
         </View>
     );
