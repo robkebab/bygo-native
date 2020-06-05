@@ -4,6 +4,7 @@ import {
   Button,
   StyleSheet,
   Text,
+  TouchableOpacity,
   FlatList,
   TextInput,
 } from "react-native";
@@ -14,7 +15,11 @@ const URL = "http://localhost:3000";
 const List = ({ route }) => {
   const { list } = route.params;
   const [items, setItems] = useState([]);
-  const [newItem, setNewItem] = useState('')
+  const [newItem, setNewItem] = useState("");
+
+
+  const [title, setTitle] = useState(list.name);
+  const [titleEdit, setTitleEdit] = useState(false);
 
   useEffect(getListItems, []);
 
@@ -29,22 +34,39 @@ const List = ({ route }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
       },
       body: JSON.stringify({
         item: {
-          name: newItem
-        }
-      })
+          name: newItem,
+        },
+      }),
     })
-    .then(r => r.json())
-    .then(item => setItems([...items, item]))
-    setNewItem('');
+      .then((r) => r.json())
+      .then((item) => setItems([...items, item]));
+    setNewItem("");
+  }
+
+  function editTitle() {
+    setTitleEdit(!titleEdit);
   }
 
   return (
     <View style={styles.container}>
-      <Text>{list.name}</Text>
+      <TouchableOpacity onLongPress={editTitle}>
+        {titleEdit ? (
+          <>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setTitle(text)}
+            defaultValue={title}
+          ></TextInput>
+          <Button title="+" onPress={editTitle}/>
+          </>
+        ) : (
+          <Text>{title}</Text>
+        )}
+      </TouchableOpacity>
       <ListItems items={items} />
       <TextInput
         style={styles.input}
