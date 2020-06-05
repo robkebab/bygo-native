@@ -1,9 +1,20 @@
 import React from "react";
 import { Button, StyleSheet, Text, FlatList } from "react-native";
 
-const MyLists = ({ lists }) => {
+const MyLists = ({ navigation, lists }) => {
   function renderItem({ item }) {
-    return <Text style={styles.li}>{item.name}</Text>;
+    return (
+      <Text
+        style={styles.li}
+        onPress={() =>
+          navigation.navigate("List", {
+            list: item,
+          })
+        }
+      >
+        {item.name}
+      </Text>
+    );
   }
 
   return (
@@ -12,9 +23,7 @@ const MyLists = ({ lists }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-
-  },
+  container: {},
   li: {
     flex: 1,
     textAlign: "center",

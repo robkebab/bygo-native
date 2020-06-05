@@ -20,8 +20,6 @@ const LoginPage = ({handleSubmit}) => {
         onChangeText={(text) => setPassword(text)}
         defaultValue={password}
       />
-      <Text>{email}</Text>
-      <Text>{password}</Text>
       <Button onPress={() => handleSubmit(email, password)} title="Log In" />
     </View>
   );

@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginPage from "./components/LoginPage";
 import MyListsPage from "./components/MyListsPage";
+import List from "./components/List";
 
 const URL = "http://localhost:3000";
 
@@ -70,8 +71,15 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="My List">
-              {props => <MyListsPage {...props} userID={currentUser.id} handlePress={logOut}/>}
+              {(props) => (
+                <MyListsPage
+                  {...props}
+                  userID={currentUser.id}
+                  handlePress={logOut}
+                />
+              )}
             </Stack.Screen>
+            <Stack.Screen name="List" component={List} />
           </Stack.Navigator>
         </NavigationContainer>
       )}

@@ -4,7 +4,7 @@ import {Button, StyleSheet, Text, View } from "react-native";
 
 const URL = "http://localhost:3000";
 
-const MyListsPage = ({handlePress, userID}) => {
+const MyListsPage = ({handlePress, userID, navigation}) => {
   const [lists, setLists] = useState([])
 
   useEffect(getLists, [])
@@ -30,7 +30,7 @@ const MyListsPage = ({handlePress, userID}) => {
     return (
         <View style={styles.container}>
             <Button title="Add List" />
-            <MyLists style={styles.listContainer} lists={lists} ></MyLists>
+            <MyLists style={styles.listContainer} lists={lists} navigation={navigation}></MyLists>
             <Button title="Log Out" onPress={handlePress} />
         </View>
     );
