@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { View, Button, StyleSheet, Text, FlatList } from "react-native";
+import ListItems from './ListItems'
 
 const URL = "http://localhost:3000";
 
@@ -12,12 +13,13 @@ const List = ({ route }) => {
   function getListItems() {
     fetch(URL + `/lists/${list.id}/items`)
     .then(r => r.json())
-    .then(j => console.log(j))
+    .then(j => setItems(j))
   }
 
   return (
     <View style={styles.container}>
       <Text>{list.name}</Text>
+      <ListItems items={items} />
     </View>
   );
 };

@@ -70,7 +70,7 @@ export default function App() {
       ) : (
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="My List">
+            <Stack.Screen name="My Lists">
               {(props) => (
                 <MyListsPage
                   {...props}

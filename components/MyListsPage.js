@@ -30,7 +30,7 @@ const MyListsPage = ({handlePress, userID, navigation}) => {
     return (
         <View style={styles.container}>
             <Button title="Add List" />
-            <MyLists style={styles.listContainer} lists={lists} navigation={navigation}></MyLists>
+            <MyLists lists={lists} navigation={navigation}></MyLists>
             <Button title="Log Out" onPress={handlePress} />
         </View>
     );
