@@ -3,12 +3,10 @@ import {
   View,
   Button,
   StyleSheet,
-  Text,
-  TouchableOpacity,
-  FlatList,
   TextInput,
 } from "react-native";
 import ListItems from "./ListItems";
+import ListTitle from "./ListTitle";
 
 const URL = "http://localhost:3000";
 
@@ -18,8 +16,7 @@ const List = ({ route }) => {
   const [newItem, setNewItem] = useState("");
 
 
-  const [title, setTitle] = useState(list.name);
-  const [titleEdit, setTitleEdit] = useState(false);
+  
 
   useEffect(getListItems, []);
 
@@ -47,26 +44,9 @@ const List = ({ route }) => {
     setNewItem("");
   }
 
-  function editTitle() {
-    setTitleEdit(!titleEdit);
-  }
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity onLongPress={editTitle}>
-        {titleEdit ? (
-          <>
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => setTitle(text)}
-            defaultValue={title}
-          ></TextInput>
-          <Button title="+" onPress={editTitle}/>
-          </>
-        ) : (
-          <Text>{title}</Text>
-        )}
-      </TouchableOpacity>
+      <ListTitle name={list.name} ID={list.id} />
       <ListItems items={items} />
       <TextInput
         style={styles.input}

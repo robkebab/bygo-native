@@ -9,6 +9,12 @@ const MyListsPage = ({ handlePress, userID, navigation }) => {
 
   useEffect(getLists, []);
 
+  function getLists() {
+    fetch(URL + `/users/${userID}/lists`)
+      .then((r) => r.json())
+      .then((j) => setLists(j));
+  }
+
   function addList() {
     let newList;
     fetch(URL + "/lists", {
@@ -31,12 +37,6 @@ const MyListsPage = ({ handlePress, userID, navigation }) => {
           list,
         });
       });
-  }
-
-  function getLists() {
-    fetch(URL + `/users/${userID}/lists`)
-      .then((r) => r.json())
-      .then((j) => setLists(j));
   }
 
   return (
