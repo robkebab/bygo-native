@@ -25,7 +25,21 @@ const List = ({ route }) => {
   }
 
   function addItem() {
-    console.log(newItem)
+    fetch(URL + `/lists/${list.id}/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        item: {
+          name: newItem
+        }
+      })
+    })
+    .then(r => r.json())
+    .then(item => setItems([...items, item]))
+    setNewItem('');
   }
 
   return (
