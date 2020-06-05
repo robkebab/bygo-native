@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+// import { Button, StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import LoginPage from "./components/LoginPage";
 import MyListsPage from "./components/MyListsPage";
 
 const URL = "http://localhost:3000";
+
+const Stack = createStackNavigator();
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -59,22 +63,18 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      {console.log(currentUser)}
-      {loggedIn ? (
-        <MyListsPage handlePress={logOut} userID={currentUser.id}/>
-      ) : (
+    <>
+      {!loggedIn ? (
         <LoginPage handleSubmit={logIn} />
+      ) : (
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="My List">
+              {props => <MyListsPage {...props} userID={currentUser.id} handlePress={logOut}/>}
+            </Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
       )}
-    </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

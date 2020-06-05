@@ -29,7 +29,6 @@ const MyListsPage = ({handlePress, userID}) => {
   // }
     return (
         <View style={styles.container}>
-            <Text>My Lists</Text>
             <Button title="Add List" />
             <MyLists style={styles.listContainer} lists={lists} ></MyLists>
             <Button title="Log Out" onPress={handlePress} />
@@ -41,7 +40,6 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: "#fff",
-      marginTop: 30,
       alignItems: "center",
       justifyContent: "flex-start",
     },
