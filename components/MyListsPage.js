@@ -10,6 +10,7 @@ const MyListsPage = ({ handlePress, userID, navigation }) => {
   useEffect(getLists, []);
 
   function addList() {
+    let newList;
     fetch(URL + "/lists", {
       method: "POST",
       headers: {
@@ -24,7 +25,12 @@ const MyListsPage = ({ handlePress, userID, navigation }) => {
       }),
     })
       .then((r) => r.json())
-      .then((list) => setLists([...lists, list]));
+      .then((list) => {
+        setLists([...lists, list]);
+        navigation.navigate("List", {
+          list,
+        });
+      });
   }
 
   function getLists() {
