@@ -13,6 +13,7 @@ const Stack = createStackNavigator();
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [dbChange, setDbChange] = useState(null);
 
   // useEffect(isUser, []);
 
