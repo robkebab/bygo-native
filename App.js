@@ -1,26 +1,10 @@
 import React, { useEffect, useState } from "react";
-
-// Navigation
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-
-// Recoil
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from "recoil";
-
-// Components
+import NavContainer from "./components/NavContainer";
 import LoginPage from "./components/LoginPage";
-import MyListsPage from "./components/MyListsPage";
-import List from "./components/List";
+// Recoil
+import { RecoilRoot } from "recoil";
 
 const URL = "http://localhost:3000";
-
-const Stack = createStackNavigator();
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -82,20 +66,7 @@ export default function App() {
         <LoginPage handleSubmit={logIn} />
       ) : (
         <RecoilRoot>
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen name="My Lists">
-                {(props) => (
-                  <MyListsPage
-                    {...props}
-                    userID={currentUser.id}
-                    handlePress={logOut}
-                  />
-                )}
-              </Stack.Screen>
-              <Stack.Screen name="List" component={List} />
-            </Stack.Navigator>
-          </NavigationContainer>
+          <NavContainer logOut={logOut} currentUser={currentUser}/>
         </RecoilRoot>
       )}
     </>
