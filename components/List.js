@@ -43,16 +43,20 @@ const List = ({ route }) => {
   }
 
   function removeItem(item) {
-    fetch(URL + `/list/${list.id}/remove`, {
-      method: "DELETE",
+    fetch(URL + `/lists/${list.id}/remove`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      body: JSON.stringify({
+        item: {
+          id: item.id
+        }
+      })
     })
-    // let index = items.findIndex(i => i.id === item.id)
-    // setItems(removeItemAtIndex(items, index))
-    console.log("deleting Item")
+    let index = items.findIndex(i => i.id === item.id)
+    setItems(removeItemAtIndex(items, index))
   }
 
   function persistChange(ID, title) {
