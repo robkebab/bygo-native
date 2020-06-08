@@ -9,27 +9,12 @@ import {
 
 const URL = "http://localhost:3000";
 
-const ListTitle = ({ name, ID }) => {
+const ListTitle = ({ name, ID, handlePress }) => {
   const [title, setTitle] = useState(name);
   const [titleEdit, setTitleEdit] = useState(false);
 
   function editTitle() {
     setTitleEdit(!titleEdit);
-  }
-
-  function persistChange() {
-    fetch(URL + `/lists/${ID}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        list: {
-          name: title,
-        },
-      }),
-    });
   }
 
   return (
@@ -45,7 +30,7 @@ const ListTitle = ({ name, ID }) => {
             title="+"
             onPress={() => {
               editTitle();
-              persistChange();
+              handlePress(ID, title);
             }}
           />
         </>

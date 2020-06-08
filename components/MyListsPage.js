@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
-import MyLists from "./MyLists";
 import { Button, StyleSheet, Text, View } from "react-native";
+
+// Recoil
+import {listsState} from '../service/atoms'
+import {useRecoilState} from 'recoil'
+
+// Components
+import MyLists from "./MyLists";
 
 const URL = "http://localhost:3000";
 
 const MyListsPage = ({ handlePress, userID, navigation }) => {
-  const [lists, setLists] = useState([]);
+  const [lists, setLists] = useRecoilState(listsState);
 
   useEffect(getLists, []);
 

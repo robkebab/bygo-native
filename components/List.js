@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Button,
-  StyleSheet,
-  TextInput,
-} from "react-native";
+import { View, Button, StyleSheet, TextInput } from "react-native";
+// Recoil
+import { listsState } from "../service/atoms";
+import { useRecoilState } from "recoil";
+
+// Components
 import ListItems from "./ListItems";
 import ListTitle from "./ListTitle";
 
@@ -14,9 +14,7 @@ const List = ({ route }) => {
   const { list } = route.params;
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState("");
-
-
-  
+  const [lists, setLists] = useRecoilState(listsState);
 
   useEffect(getListItems, []);
 
@@ -44,9 +42,29 @@ const List = ({ route }) => {
     setNewItem("");
   }
 
+  function persistChange(ID, title) {
+    fetch(URL + `/lists/${ID}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        list: {
+          name: title,
+        },
+      }),
+    })
+      .then((r) => r.json())
+      .then((newList) => {
+        let index = lists.findIndex((l) => l.id === ID);
+        setLists(replaceItemAtIndex(lists, index, newList));
+      });
+  }
+
   return (
     <View style={styles.container}>
-      <ListTitle name={list.name} ID={list.id} />
+      <ListTitle name={list.name} ID={list.id} handlePress={persistChange} />
       <ListItems items={items} />
       <TextInput
         style={styles.input}
@@ -75,5 +93,9 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 });
+
+function replaceItemAtIndex(arr, index, newValue) {
+  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
+}
 
 export default List;
