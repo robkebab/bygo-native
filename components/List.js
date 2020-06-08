@@ -42,6 +42,19 @@ const List = ({ route }) => {
     setNewItem("");
   }
 
+  function removeItem(item) {
+    fetch(URL + `/list/${list.id}/remove`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+    // let index = items.findIndex(i => i.id === item.id)
+    // setItems(removeItemAtIndex(items, index))
+    console.log("deleting Item")
+  }
+
   function persistChange(ID, title) {
     fetch(URL + `/lists/${ID}`, {
       method: "PATCH",
@@ -65,7 +78,7 @@ const List = ({ route }) => {
   return (
     <View style={styles.container}>
       <ListTitle name={list.name} ID={list.id} handlePress={persistChange} />
-      <ListItems items={items} />
+      <ListItems items={items} handleDel={removeItem}/>
       <TextInput
         style={styles.input}
         placeholder="Add an item"
@@ -96,6 +109,10 @@ const styles = StyleSheet.create({
 
 function replaceItemAtIndex(arr, index, newValue) {
   return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
+}
+
+function removeItemAtIndex(arr, index) {
+  return [...arr.slice(0, index), ...arr.slice(index + 1)];
 }
 
 export default List;
