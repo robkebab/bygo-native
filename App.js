@@ -1,7 +1,19 @@
 import React, { useEffect, useState } from "react";
-// import { Button, StyleSheet, Text, View } from "react-native";
+
+// Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+
+// Recoil
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
+
+// Components
 import LoginPage from "./components/LoginPage";
 import MyListsPage from "./components/MyListsPage";
 import List from "./components/List";
@@ -69,20 +81,22 @@ export default function App() {
       {!loggedIn ? (
         <LoginPage handleSubmit={logIn} />
       ) : (
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="My Lists">
-              {(props) => (
-                <MyListsPage
-                  {...props}
-                  userID={currentUser.id}
-                  handlePress={logOut}
-                />
-              )}
-            </Stack.Screen>
-            <Stack.Screen name="List" component={List} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <RecoilRoot>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen name="My Lists">
+                {(props) => (
+                  <MyListsPage
+                    {...props}
+                    userID={currentUser.id}
+                    handlePress={logOut}
+                  />
+                )}
+              </Stack.Screen>
+              <Stack.Screen name="List" component={List} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </RecoilRoot>
       )}
     </>
   );
