@@ -1,10 +1,16 @@
 import React from "react";
-import { Button, StyleSheet, Text, FlatList } from "react-native";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  FlatList,
+  Button,
+} from "react-native";
 
-const MyLists = ({ navigation, lists }) => {
+const MyLists = ({ navigation, lists, handleDel }) => {
   function renderItem({ item }) {
     return (
-      <Text
+      <TouchableOpacity
         style={styles.li}
         onPress={() =>
           navigation.navigate("List", {
@@ -12,8 +18,11 @@ const MyLists = ({ navigation, lists }) => {
           })
         }
       >
-        {item.name}
-      </Text>
+        <TouchableOpacity onPress={() => handleDel(item.id)}>
+          <Text style={styles.delButton}>+</Text>
+        </TouchableOpacity>
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
     );
   }
 
@@ -34,6 +43,9 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 5,
   },
+  delButton: {
+    fontSize: 20
+  }
 });
 
 export default MyLists;

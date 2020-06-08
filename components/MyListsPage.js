@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 // Recoil
-import {listsState} from '../service/atoms'
-import {useRecoilState} from 'recoil'
+import { listsState } from "../service/atoms";
+import { useRecoilState } from "recoil";
 
 // Components
 import MyLists from "./MyLists";
@@ -45,10 +45,22 @@ const MyListsPage = ({ handlePress, userID, navigation }) => {
       });
   }
 
+  function deleteList(ID) {
+    fetch(URL + `/lists/${ID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+    let index = lists.findIndex(l => l.id === ID)
+    setLists(removeItemAtIndex(lists, index))
+  }
+
   return (
     <View style={styles.container}>
       <Button title="Add List" onPress={addList} />
-      <MyLists lists={lists} navigation={navigation}></MyLists>
+      <MyLists lists={lists} navigation={navigation} handleDel={deleteList}></MyLists>
       <Button title="Log Out" onPress={handlePress} />
     </View>
   );
@@ -62,5 +74,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
 });
+
+function removeItemAtIndex(arr, index) {
+  return [...arr.slice(0, index), ...arr.slice(index + 1)];
+}
 
 export default MyListsPage;
