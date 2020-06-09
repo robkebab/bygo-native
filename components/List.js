@@ -60,7 +60,7 @@ const List = ({ route }) => {
     setItems(removeItemAtIndex(items, index));
   }
 
-  function checkItem(item) {
+  function toggleChecked(item) {
     fetch(URL + `/items/${item.id}`, {
       method: "PATCH",
       headers: {
@@ -69,7 +69,7 @@ const List = ({ route }) => {
       },
       body: JSON.stringify({
         item: {
-          checked: true,
+          checked: !item.checked,
         },
       }),
     })
@@ -106,9 +106,12 @@ const List = ({ route }) => {
       <ListItems
         items={items.filter((i) => !i.checked)}
         handleDel={removeItem}
-        handleCheck={checkItem}
+        handleCheck={toggleChecked}
       />
-      <MyBag items={items.filter((i) => i.checked)} />
+      <MyBag
+        items={items.filter((i) => i.checked)}
+        handleCheck={toggleChecked}
+      />
       <View style={styles.addCont}>
         <TextInput
           style={styles.input}

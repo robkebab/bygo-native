@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import {itemsState} from '../service/atoms'
-import {useRecoilState} from "recoil"
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import ListItems from "./ListItems";
 
 const URL = "http://localhost:3000";
 
-const MyBag = ({ items }) => {
+const MyBag = ({ items, handleCheck }) => {
   const [open, setOpen] = useState(false);
 
   function toggleOpen() {
@@ -15,26 +13,6 @@ const MyBag = ({ items }) => {
 
   function doNothing(item) {
     console.log(item);
-  }
-
-  function removeItem(item) {
-    fetch(URL + `/items/${item.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        item: {
-          checked: !item.checked,
-        },
-      }),
-    })
-      .then((r) => r.json())
-      .then((checkedItem) => {
-        let index = items.findIndex((i) => i.id === item.id);
-        setItems((prev) => replaceItemAtIndex(prev, index, checkedItem));
-      });
   }
 
   return (
@@ -51,7 +29,7 @@ const MyBag = ({ items }) => {
         <ListItems
           items={items}
           handleDel={doNothing}
-          handleCheck={removeItem}
+          handleCheck={handleCheck}
         />
       ) : null}
     </View>
