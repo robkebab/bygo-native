@@ -17,6 +17,11 @@ const ListItems = ({ items, handleDel }) => {
           </Text>
         </TouchableOpacity>
         <Text style={styles.text}>{item.name}</Text>
+        <TouchableOpacity>
+          <Text style={styles.checkButton} onPress={() => handleDel(item)}>
+          &#10003;
+          </Text>
+        </TouchableOpacity>
       </TouchableOpacity>
     );
   }
@@ -39,8 +44,6 @@ const styles = StyleSheet.create({
   li: {
     flex: 1,
     flexDirection: "row",
-    textAlign: "center",
-    fontSize: 20,
     width: 300,
     borderWidth: 2,
     borderColor: "blue",
@@ -48,11 +51,27 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   text: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
     margin: 5,
+    fontSize: 17,
+    // borderWidth: 2
   },
   delButton: {
+    flex: 1,
     margin: 5,
+    fontSize: 15,
+    color: "red",
+    // borderWidth: 2
   },
+  checkButton: {
+    flex: 1,
+    margin: 5,
+    fontSize: 15,
+    color: "green",
+  }
 });
 
 export default ListItems;
