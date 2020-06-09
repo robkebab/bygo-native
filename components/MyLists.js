@@ -25,7 +25,7 @@ const MyLists = ({ navigation, lists, handleDel }) => {
       style={styles.container}
       data={lists}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.id.toString()}
     />
   );
 };

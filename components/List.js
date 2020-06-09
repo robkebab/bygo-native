@@ -7,12 +7,12 @@ import { useRecoilState } from "recoil";
 // Components
 import ItemInput from './ItemInput'
 import ListItems from "./ListItems";
-import MyBag from "./MyBag";
+import MyBagFooter from "./MyBagFooter";
 // import ListTitle from "./ListTitle";
 
 const URL = "http://localhost:3000";
 
-const List = ({ route }) => {
+const List = ({navigation, route }) => {
   const { list } = route.params;
   const [items, setItems] = useState([]);
   const [lists, setLists] = useRecoilState(listsState);
@@ -109,9 +109,9 @@ const List = ({ route }) => {
         handleDel={removeItem}
         handleCheck={toggleChecked}
       />
-      <MyBag
+      <MyBagFooter
         items={items.filter((i) => i.checked)}
-        handleCheck={toggleChecked}
+        navigation={navigation}
       />
     </View>
   );

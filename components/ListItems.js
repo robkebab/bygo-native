@@ -31,7 +31,7 @@ const ListItems = ({ items, handleDel, handleCheck }) => {
       <FlatList
         data={items}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
     </SafeAreaView>
   );
