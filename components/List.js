@@ -76,7 +76,7 @@ const List = ({ route }) => {
       .then((r) => r.json())
       .then((checkedItem) => {
         let index = items.findIndex((i) => i.id === item.id);
-        setItems(prev => replaceItemAtIndex(prev, index, checkedItem));
+        setItems((prev) => replaceItemAtIndex(prev, index, checkedItem));
       });
   }
 
@@ -109,13 +109,15 @@ const List = ({ route }) => {
         handleCheck={checkItem}
       />
       <MyBag items={items.filter((i) => i.checked)} />
-      <TextInput
-        style={styles.input}
-        placeholder="Add an item"
-        onChangeText={(text) => setNewItem(text)}
-        defaultValue={newItem}
-      />
-      <Button title="Add" onPress={addItem}></Button>
+      <View style={styles.addCont}>
+        <TextInput
+          style={styles.input}
+          placeholder="Add an item"
+          onChangeText={(text) => setNewItem(text)}
+          defaultValue={newItem}
+        />
+        <Button title="Add" onPress={addItem}></Button>
+      </View>
     </View>
   );
 };
@@ -136,6 +138,12 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5,
   },
+  addCont: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  }
 });
 
 function replaceItemAtIndex(arr, index, newValue) {

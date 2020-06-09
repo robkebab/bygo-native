@@ -39,7 +39,10 @@ const ListItems = ({ items, handleDel, handleCheck }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 5,
     maxHeight: 400,
+    // borderWidth: 2,
+    // borderColor: "green"
   },
   li: {
     flex: 1,
