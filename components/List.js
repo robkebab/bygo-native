@@ -60,6 +60,21 @@ const List = ({ route }) => {
     setItems(removeItemAtIndex(items, index))
   }
 
+  function checkItem(item) {
+    fetch(URL + `/items/${item.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        item: {
+          checked: true
+        }
+      })
+    })
+  }
+
   function persistChange(ID, title) {
     fetch(URL + `/lists/${ID}`, {
       method: "PATCH",
@@ -83,7 +98,7 @@ const List = ({ route }) => {
   return (
     <View style={styles.container}>
       <ListTitle name={list.name} ID={list.id} handlePress={persistChange} />
-      <ListItems items={items} handleDel={removeItem}/>
+      <ListItems items={items.filter(i => !i.checked)} handleDel={removeItem} handleCheck={checkItem}/>
       <MyBag items={items.filter(i => i.checked)}/>
       <TextInput
         style={styles.input}

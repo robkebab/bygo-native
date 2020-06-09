@@ -7,7 +7,7 @@ import {
   SafeAreaView,
 } from "react-native";
 
-const ListItems = ({ items, handleDel }) => {
+const ListItems = ({ items, handleDel, handleCheck }) => {
   function renderItem({ item }) {
     return (
       <TouchableOpacity style={styles.li}>
@@ -18,7 +18,7 @@ const ListItems = ({ items, handleDel }) => {
         </TouchableOpacity>
         <Text style={styles.text}>{item.name}</Text>
         <TouchableOpacity>
-          <Text style={styles.checkButton} onPress={() => handleDel(item)}>
+          <Text style={styles.checkButton} onPress={() => handleCheck(item)}>
           &#10003;
           </Text>
         </TouchableOpacity>
