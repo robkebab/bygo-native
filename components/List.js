@@ -139,11 +139,14 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   addCont: {
-    flex: 1,
+    flex: 0.5,
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+    marginBottom: 10,
+    // borderWidth: 2,
+    // borderColor: "green"
+  },
 });
 
 function replaceItemAtIndex(arr, index, newValue) {
