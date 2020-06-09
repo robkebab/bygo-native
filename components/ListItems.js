@@ -12,7 +12,9 @@ const ListItems = ({ items, handleDel }) => {
     return (
       <TouchableOpacity style={styles.li}>
         <TouchableOpacity>
-          <Text style={styles.delButton} onPress={() => handleDel(item)}>X</Text>
+          <Text style={styles.delButton} onPress={() => handleDel(item)}>
+            X
+          </Text>
         </TouchableOpacity>
         <Text style={styles.text}>{item.name}</Text>
       </TouchableOpacity>

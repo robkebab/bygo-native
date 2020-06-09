@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 // Components
 import ListItems from "./ListItems";
 import ListTitle from "./ListTitle";
+import MyBag from "./MyBag";
 
 const URL = "http://localhost:3000";
 
@@ -83,6 +84,7 @@ const List = ({ route }) => {
     <View style={styles.container}>
       <ListTitle name={list.name} ID={list.id} handlePress={persistChange} />
       <ListItems items={items} handleDel={removeItem}/>
+      <MyBag items={items.filter(i => i.checked)}/>
       <TextInput
         style={styles.input}
         placeholder="Add an item"
@@ -102,6 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   input: {
+    // flex: 1,
     height: 40,
     width: 200,
     borderColor: "rgba(0, 0, 0, 0.3)",

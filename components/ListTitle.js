@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  View,
   Button,
   StyleSheet,
   Text,
@@ -18,9 +19,9 @@ const ListTitle = ({ name, ID, handlePress }) => {
   }
 
   return (
-    <TouchableOpacity onLongPress={editTitle}>
+    <TouchableOpacity style={styles.container} onLongPress={editTitle}>
       {titleEdit ? (
-        <>
+        <View style={styles.inputCont}>
           <TextInput
             style={styles.input}
             onChangeText={(text) => setTitle(text)}
@@ -32,16 +33,33 @@ const ListTitle = ({ name, ID, handlePress }) => {
               editTitle();
               handlePress(ID, title);
             }}
+            style={styles.addButton}
           />
-        </>
+        </View>
       ) : (
-        <Text>{title}</Text>
+        <Text style={styles.title}>{title}</Text>
       )}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "90%",
+    borderBottomWidth: 2
+  },
+  title: {
+    fontSize: 20,
+  },
+  inputCont: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   input: {
     height: 40,
     width: 200,
@@ -50,6 +68,9 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5,
   },
+  addButton: {
+    borderWidth: 2,
+  }
 });
 
 export default ListTitle;
