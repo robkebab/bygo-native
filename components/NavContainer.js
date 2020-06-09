@@ -23,7 +23,11 @@ const NavContainer = ({ logOut, currentUser }) => {
             />
           )}
         </Stack.Screen>
-        <Stack.Screen name="List" component={List} />
+        <Stack.Screen
+          name="List"
+          component={List}
+          options={({ route }) => ({ title: route.params.list.name })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

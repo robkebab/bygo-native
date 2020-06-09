@@ -40,7 +40,7 @@ const MyListsPage = ({ handlePress, userID, navigation }) => {
       .then((list) => {
         setLists([...lists, list]);
         navigation.navigate("List", {
-          list,
+          list
         });
       });
   }
