@@ -6,11 +6,13 @@ import {
   Button,
   TouchableOpacity,
   Text,
+  Switch,
 } from "react-native";
 
 export default function ItemInput({ addItem }) {
   const [newItem, setNewItem] = useState("");
   const [adding, setAdding] = useState(false);
+  const [temp, setTemp] = useState(false);
 
   return (
     <>
@@ -22,18 +24,29 @@ export default function ItemInput({ addItem }) {
             onChangeText={(text) => setNewItem(text)}
             defaultValue={newItem}
           />
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={temp ? "#f5dd4b" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={() => setTemp(prev => !prev)}
+            value={temp}
+          />
           <Button
             title="Add"
             onPress={() => {
-              addItem(newItem);
+              addItem(newItem, temp);
               setNewItem("");
-              setAdding(prev => !prev)
+              setTemp((prev) => !prev);
+              setAdding((prev) => !prev);
             }}
           ></Button>
         </View>
       ) : (
         <View style={styles.addCont}>
-          <TouchableOpacity style={styles.toggleAdd} onPress={() => setAdding(prev => !prev)}>
+          <TouchableOpacity
+            style={styles.toggleAdd}
+            onPress={() => setAdding((prev) => !prev)}
+          >
             <Text style={styles.plus}>+</Text>
           </TouchableOpacity>
         </View>
@@ -71,7 +84,7 @@ const styles = StyleSheet.create({
   },
   plus: {
     position: "absolute",
-    bottom: .3,
+    bottom: 0.3,
     left: 7.5,
     fontSize: 40,
     color: "white",

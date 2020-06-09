@@ -25,7 +25,7 @@ const List = ({ route }) => {
       .then((j) => setItems(j));
   }
 
-  function addItem(newItem) {
+  function addItem(newItem, temp) {
     fetch(URL + `/lists/${list.id}/add`, {
       method: "POST",
       headers: {
@@ -35,6 +35,7 @@ const List = ({ route }) => {
       body: JSON.stringify({
         item: {
           name: newItem,
+          temp
         },
       }),
     })
