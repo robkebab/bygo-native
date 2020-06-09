@@ -52,12 +52,12 @@ const List = ({ route }) => {
       },
       body: JSON.stringify({
         item: {
-          id: item.id
-        }
-      })
-    })
-    let index = items.findIndex(i => i.id === item.id)
-    setItems(removeItemAtIndex(items, index))
+          id: item.id,
+        },
+      }),
+    });
+    let index = items.findIndex((i) => i.id === item.id);
+    setItems(removeItemAtIndex(items, index));
   }
 
   function checkItem(item) {
@@ -69,10 +69,15 @@ const List = ({ route }) => {
       },
       body: JSON.stringify({
         item: {
-          checked: true
-        }
-      })
+          checked: true,
+        },
+      }),
     })
+      .then((r) => r.json())
+      .then((checkedItem) => {
+        let index = items.findIndex((i) => i.id === item.id);
+        setItems(prev => replaceItemAtIndex(prev, index, checkedItem));
+      });
   }
 
   function persistChange(ID, title) {
@@ -98,8 +103,12 @@ const List = ({ route }) => {
   return (
     <View style={styles.container}>
       <ListTitle name={list.name} ID={list.id} handlePress={persistChange} />
-      <ListItems items={items.filter(i => !i.checked)} handleDel={removeItem} handleCheck={checkItem}/>
-      <MyBag items={items.filter(i => i.checked)}/>
+      <ListItems
+        items={items.filter((i) => !i.checked)}
+        handleDel={removeItem}
+        handleCheck={checkItem}
+      />
+      <MyBag items={items.filter((i) => i.checked)} />
       <TextInput
         style={styles.input}
         placeholder="Add an item"
