@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 
 const MyBag = ({ items }) => {
+  const [open, setOpen] = useState(false);
+
+  function toggleOpen() {
+      setOpen(prev => !prev)
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>
         My Bag ({items.length}) ------------------------{"   "}
       </Text>
-      <TouchableOpacity style={styles.dropDown}>
-        <Text>&#9660;</Text>
+      <TouchableOpacity style={styles.dropDown} onPress={toggleOpen}>
+        {open ? <Text>&#9650;</Text> : <Text>&#9660;</Text>}
       </TouchableOpacity>
     </View>
   );
@@ -28,8 +34,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   dropDown: {
-      fontSize: 20,
-  }
+    fontSize: 20,
+  },
 });
 
 export default MyBag;
