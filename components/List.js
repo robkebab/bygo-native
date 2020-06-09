@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { View, Button, StyleSheet, TextInput } from "react-native";
+import { View, Button, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 // Recoil
 import { listsState } from "../service/atoms";
 import { useRecoilState } from "recoil";
 
 // Components
+import ItemInput from './ItemInput'
 import ListItems from "./ListItems";
-import ListTitle from "./ListTitle";
 import MyBag from "./MyBag";
+// import ListTitle from "./ListTitle";
 
 const URL = "http://localhost:3000";
 
 const List = ({ route }) => {
   const { list } = route.params;
   const [items, setItems] = useState([]);
-  const [newItem, setNewItem] = useState("");
   const [lists, setLists] = useRecoilState(listsState);
 
   useEffect(getListItems, []);
@@ -25,7 +25,7 @@ const List = ({ route }) => {
       .then((j) => setItems(j));
   }
 
-  function addItem() {
+  function addItem(newItem) {
     fetch(URL + `/lists/${list.id}/add`, {
       method: "POST",
       headers: {
@@ -40,7 +40,6 @@ const List = ({ route }) => {
     })
       .then((r) => r.json())
       .then((item) => setItems([...items, item]));
-    setNewItem("");
   }
 
   function removeItem(item) {
@@ -102,7 +101,8 @@ const List = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <ListTitle name={list.name} ID={list.id} handlePress={persistChange} />
+      {/* <ListTitle name={list.name} ID={list.id} handlePress={persistChange} /> */}
+      <ItemInput addItem={addItem}/>
       <ListItems
         items={items.filter((i) => !i.checked)}
         handleDel={removeItem}
@@ -112,15 +112,6 @@ const List = ({ route }) => {
         items={items.filter((i) => i.checked)}
         handleCheck={toggleChecked}
       />
-      <View style={styles.addCont}>
-        <TextInput
-          style={styles.input}
-          placeholder="Add an item"
-          onChangeText={(text) => setNewItem(text)}
-          defaultValue={newItem}
-        />
-        <Button title="Add" onPress={addItem}></Button>
-      </View>
     </View>
   );
 };
@@ -132,24 +123,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  input: {
-    // flex: 1,
-    height: 40,
-    width: 200,
-    borderColor: "rgba(0, 0, 0, 0.3)",
-    borderWidth: 2,
-    padding: 10,
-    margin: 5,
-  },
-  addCont: {
-    flex: 0.5,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
-    // borderWidth: 2,
-    // borderColor: "green"
-  },
+  
 });
 
 function replaceItemAtIndex(arr, index, newValue) {
