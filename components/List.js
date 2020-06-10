@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { View, Button, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 // Recoil
 import { listsState } from "../service/atoms";
-import { useRecoilState } from "recoil";
+// import { itemsState } from "../service/atoms";
+import {atom, useRecoilState } from "recoil";
 
 // Components
 import ItemInput from './ItemInput'
@@ -11,6 +12,7 @@ import MyBagFooter from "./MyBagFooter";
 // import ListTitle from "./ListTitle";
 
 const URL = "http://localhost:3000";
+
 
 const List = ({navigation, route }) => {
   const { list } = route.params;
