@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, Button, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 // Recoil
-import { listsState } from "../service/atoms";
-// import { itemsState } from "../service/atoms";
+import { listsState } from "../service/listsState";
+import { itemsState } from "../service/itemsState";
 import {atom, useRecoilState } from "recoil";
 
 // Components
@@ -16,7 +16,7 @@ const URL = "http://localhost:3000";
 
 const List = ({navigation, route }) => {
   const { list } = route.params;
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useRecoilState(itemsState);
   const [lists, setLists] = useRecoilState(listsState);
 
   useEffect(getListItems, []);

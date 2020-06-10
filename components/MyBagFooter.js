@@ -8,9 +8,7 @@ const MyBagFooter = ({ items, navigation}) => {
   const [open, setOpen] = useState(false);
 
   function viewMyBag(){
-    navigation.navigate("My Bag", {
-      items,
-    })
+    navigation.navigate("My Bag")
   }
 
   return (

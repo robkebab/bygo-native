@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 // Recoil
-import { listsState } from "../service/atoms";
+import { listsState } from "../service/listsState";
 import { useRecoilState } from "recoil";
 
 // Components
